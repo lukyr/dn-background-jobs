@@ -1,6 +1,9 @@
 const kue = require('kue');
-kue.createQueue({
+const queue = kue.createQueue({
     redis: process.env.REDIS_CONNECTION_STRING
 });
 
-module.exports = kue;
+module.exports = {
+    init: kue,
+    queue
+};

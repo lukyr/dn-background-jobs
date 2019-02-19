@@ -1,6 +1,6 @@
 version: "3"
 services:
-  app:
+  app1:
     image: "node:10"
     user: "node"
     volumes:
@@ -11,14 +11,27 @@ services:
       - redis
     environment:
       NODE_ENV: development
-      PORT: 3000
+      PORT: 3001
       MAIL_SMTP_HOST: mailcatcher-server
       MAIL_SMTP_PORT: 1025
       REDIS_CONNECTION_STRING: redis://redis-server
       MONGO_CONNECTION_STRING: mongodb://mongo-server/dn-database
     ports:
-      - 3000:3000
-    command: npm run dev
+      - 3001:3001
+    command: npm run app1
+  app2:
+    image: "node:10"
+    user: "node"
+    volumes:
+      - ./:/app
+    working_dir: /app
+    environment:
+      NODE_ENV: development
+      PORT: 3002
+      REDIS_CONNECTION_STRING: redis://redis-server
+    ports:
+      - 3002:3002
+    command: npm run app2
   mongo:
     image: mongo
     restart: always

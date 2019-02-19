@@ -27,19 +27,19 @@ app.post('/users', upload.single('file'), async ({ file }, res, next) => {
 
     if (file) {
         try {
-            let listUsers = await csvToJson(file.path);
-            const transformParameter = listUsers.map(user => {
-                return {
-                    firstName: user.first_name,
-                    lastName: user.last_name,
-                    email: user.email,
-                    gender: user.gender
-                }
-            });
+            //convert data csv to json;
+            let collectionUsers = await csvToJson(file.path);
 
-            await Promise.all(_.map(transformParameter, async params => {
+            await Promise.all(_.map(collectionUsers, async itemUser => {
                 try {
-                    const user = await User.create(params);
+                    //add user into database mongo.
+                    const user = await User.create({
+                        firstName: itemUser.first_name,
+                        lastName: itemUser.last_name,
+                        email: itemUser.email,
+                        gender: itemUser.gender
+                    });
+
                     let mailOptions = {
                         from: 'info@dn.id', // sender address
                         to: user.email, // list of receivers
@@ -48,7 +48,9 @@ app.post('/users', upload.single('file'), async ({ file }, res, next) => {
                            Hi ${user.email}<br>
                            Thank you for registering for the event.<br><br>` // html body
                     };
+
                     console.log('mailOptions', mailOptions);
+                    //send email user registered.
                     let info = await mailTransport.sendMail(mailOptions);
                     console.log("Message sent: %s", info.messageId);
 
@@ -57,9 +59,7 @@ app.post('/users', upload.single('file'), async ({ file }, res, next) => {
                     throw err;
                 }
                 // Preview only available when sending through an Ethereal account
-            })).catch(err => {
-                throw err;
-            });
+            }))
             res.status(201).json({
                 status: 'ok'
             });

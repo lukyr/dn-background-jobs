@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev": "./node_modules/.bin/nodemon src/server-1.js ",
+    "app1": "./node_modules/.bin/nodemon src/server-1.js ",
+    "app2": "./node_modules/.bin/nodemon src/server-2.js ",
     "start": "node ./index.js"
   },
   "author": "Luky Ramdhani",
