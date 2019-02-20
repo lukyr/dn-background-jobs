@@ -39,7 +39,7 @@ app.post('/users', upload.single('file'), async ({
 }, res) => {
     //create job define type
     kue.queue.create('populate_data_worker', {
-            filePath: `${rootPath}/${file.path}`
+            filePath: `${file.path}`
         })
         .attempts(5) // The maximum number of retries you want the job to have
         .backoff({

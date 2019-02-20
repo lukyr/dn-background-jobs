@@ -4,8 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "app1": "./node_modules/.bin/nodemon src/server-1.js ",
-    "app2": "./node_modules/.bin/nodemon src/server-2.js ",
+    "app:1": "./node_modules/.bin/nodemon src/server-1.js ",
+    "app:2": "./node_modules/.bin/nodemon src/server-2.js ",
+    "worker:populate": "./node_modules/.bin/nodemon src/workers/populate_data_worker.js ",
+    "worker:register": "./node_modules/.bin/nodemon src/workers/user_register_worker.js ",
+    "worker:email": "./node_modules/.bin/nodemon src/workers/email_notification_worker.js ",
     "start": "node ./index.js"
   },
   "author": "Luky Ramdhani",
