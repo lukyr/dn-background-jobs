@@ -3,7 +3,7 @@ const mailTransport = require('../adapters/nodemailer');
 // Assign worker to process a job of particular type
 // 5 is the maximum number of concurrent jobs our worker will pick up.
 // Can be more if you want it to be. Can be less. Figure out your case and load.
-kue.queue.process('email_notification_worker', async (job, done) => sendEmail(job, done));
+kue.queue.process('email_notification_worker', 20, async (job, done) => sendEmail(job, done));
 
 // Actual function executed by the worker
 const sendEmail = (job, done) => {

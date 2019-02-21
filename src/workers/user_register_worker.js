@@ -4,7 +4,7 @@ const User = require('../models/User');
 // Assign worker to process a job of particular type
 // 5 is the maximum number of concurrent jobs our worker will pick up.
 // Can be more if you want it to be. Can be less. Figure out your case and load.
-kue.queue.process('user_register_worker', async (job, done) => registerUser(job, done));
+kue.queue.process('user_register_worker', 20, async (job, done) => registerUser(job, done));
 
 // Actual function executed by the worker
 const registerUser = (job, done) => {
